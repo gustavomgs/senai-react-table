@@ -36,3 +36,21 @@
     transform: rotate(360deg);
   }
 }
+
+table {
+  border: 1px solid black;
+  width: 500px;
+  margin: 0 auto;
+}
+td,th {
+  border: 1px solid black;
+}
+.right {
+  text-align: right;
+}
+.dark{
+  background-color: #c2c2c2;
+}
+.light{
+  background-color: #e8e8e8;
+}
