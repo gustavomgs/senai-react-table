@@ -6,7 +6,7 @@ function App() {
       <table cellspacing="0">
         <thead>
             <tr class="dark">
-                <th colspan="6">Vendas</th>
+                <th colspan="6">Vendas Alterado</th>
             </tr>
         </thead>
         <tbody>
