@@ -1,19 +1,11 @@
-import PriceList from '../components/PriceListComponent';
-import FirstExercise from '../exercises/FirstExercise';
-import SecondExercise from '../exercises/SecondExercise';
+import ThirdExercise from '../exercises/ThirdExercise';
 import '../style/custom.css';
-import { useState } from 'react';
 
 function PrincipalPage(){
 
-    let variavel = "Gustavo";
-    const constante = 3;
-
     return(
         <>
-            <FirstExercise />
-            <br></br>
-            <SecondExercise />
+            <ThirdExercise />
         </>
     );
 }
