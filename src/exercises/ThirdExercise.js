@@ -1,85 +1,63 @@
+import axios from "axios";
 import { useState } from "react";
+import { Alert } from "react-bootstrap";
 
 function ThirdExercise(){
-
-    let [time_nome, setTimeNome] = useState();
-    let [time_vitorias, setTimeVitorias] = useState();
-    let [time_empates, setTimeEmpates]   = useState();
-    let [class_btn, setClassBtn]   = useState("btn btn-primary mt-4");
-
-    function changeName(value){
-        setTimeNome(value.target.value);
-        setClassBtn("btn btn-success mt-4")
+    let [cep, setCep] = useState();
+    let [endereco, setEndereco] = useState([]);
+    let [status, setStatus]     = useState({
+        "variant": "",
+        "message": ""
+    });
+    
+    function changeCep(value){
+        setCep(value.target.value);
     }
 
-    function changeVictory(value){
-        setTimeVitorias(value.target.value);
-        console.log(time_vitorias);
+    function  buscarCep() {
+        //axios.get("https://viacep.com.br/ws/"+ cep +"/json").then(function (response) {
+        axios.get(`https://viacep.com.br/ws/${cep}/json`).then(function (response) {
+
+            setStatus({
+                "variant": "success",
+                "message": "Deu tudo certo (:"
+            });
+            
+            console.log(response.data);
+            setEndereco(response.data)
+        }).catch(function (error) {
+            console.log(error);
+
+            setStatus({
+                "variant": "danger",
+                "message": "Deu tudo errado ):"
+            });
+        });
+
     }
 
-    function changeDraw(value){
-        setTimeEmpates(value.target.value);
-    }
     return (
         <>
-            <div class="container pt-2">
-                
-                <div class="card">
-                    
-                    <div class="card-title p-2 border-bottom card-header">
-                        <h5>Exercício 3</h5>
-                    </div>
-                    <div class="card-body">
+            <div className="container pt-2">
 
-                        <div class="row">
+                <div className="card p-2">
+                    <input onChange={changeCep} className="form-control mb-2" type="number" maxLength={8} placeholder="Insira seu CEP"></input>
+                    <button onClick={buscarCep} className="btn btn-success"> Buscar Cep</button>    
+                </div>
 
-                            <div class="col-sm-12 col-md-3 col-lg-3">
-                                <label class="label-control"><b>Nome do time:</b></label>
-                                <input 
-                                    class="form-control"
-                                    type="text" 
-                                    maxLength={50} 
-                                    placeholder="Insira o nome do time" 
-                                    onChange={changeName}
-                                ></input>
-                            </div>
+                <Alert variant={status.variant} className="mt-2">
+                    {status.message}
+                </Alert>
 
-                            <div class="col-sm-12 col-md-2 col-lg-2">
-                                <label class="label-control"><b>Qtd Vitórias:</b></label>
-                                <input
-                                    class="form-control"
-                                    placeholder="Nº Vitórias"
-                                    type="number"
-                                    onChange={changeVictory}
-                                    disabled={!time_nome}
-                                ></input>
-                            </div>
-
-                            <div class="col-sm-12 col-md-2 col-lg-2">
-                                <label class="label-control"><b>Qtd Empates:</b></label>
-                                <input
-                                    class="form-control"
-                                    placeholder="Nº Empates"
-                                    type="number"
-                                    disabled={!time_vitorias}
-                                    onChange={changeDraw}
-                                ></input>
-                            </div>
-
-                            <div class="col-sm-12 col-md-2 col-lg-2">
-                                <button 
-                                    disabled={!time_nome || !time_vitorias || !time_empates}
-                                    className={class_btn}
-                                > Calcular</button>                                
-                            </div>
-                        </div>
-
+                <div className="row">
+                    <div className="col-12">
+                        Rua: {endereco.logradouro}
                     </div>
                 </div>
+
                 
             </div>
         </>
-    
     
     );
 }
